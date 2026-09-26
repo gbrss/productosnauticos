@@ -1,0 +1,100 @@
+---
+const products = [
+  {
+    code: 'C-011',
+    name: 'Moneda Armada de Chile',
+    price: 9500,
+    image: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'S-100-A',
+    name: 'Busto Comandante Arturo Prat',
+    price: 33500,
+    image: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'R-010',
+    name: 'Reloj Rueda de Gobierno Bronce',
+    price: 89000,
+    image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'H-045',
+    name: 'Hielera Claraboya',
+    price: 125000,
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'C-033',
+    name: 'Moneda Quinta Zona Naval',
+    price: 3950,
+    image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'S-113',
+    name: 'Figura Cadete Naval de Parada',
+    price: 43500,
+    image: 'https://images.unsplash.com/photo-1566417713940-cf6c2d6b6b4a?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'B-210',
+    name: 'Brújula Náutica de Bronce',
+    price: 28900,
+    image: 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=400&auto=format&fit=crop',
+  },
+  {
+    code: 'L-088',
+    name: 'Lámpara de Escritorio Ancla',
+    price: 67500,
+    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=400&auto=format&fit=crop',
+  },
+];
+
+function formatPrice(price: number) {
+  return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(price);
+}
+---
+
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="section-title mb-3">PRODUCTOS DESTACADOS</h2>
+      <p class="text-navy-600">Selección de nuestros productos más populares</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {products.map((product) => (
+        <article class="card group">
+          <div class="relative aspect-square overflow-hidden bg-gray-100">
+            <img 
+              src={product.image} 
+              alt={product.name}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <span class="absolute top-3 left-3 bg-navy-900/80 text-white text-xs font-medium px-2 py-1 rounded">
+              {product.code}
+            </span>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium text-navy-900 mb-1 line-clamp-2 min-h-[2.5rem]">
+              {product.name}
+            </h3>
+            <p class="text-lg font-bold text-navy-900 mb-3">
+              {formatPrice(product.price)}
+            </p>
+            <button class="w-full btn-primary text-sm py-2.5">
+              Agregar al carrito
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="text-center mt-12">
+      <a href="/catalogo" class="btn-outline">
+        Ver todo el catálogo
+      </a>
+    </div>
+  </div>
+</section>

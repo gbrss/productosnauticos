@@ -1,0 +1,64 @@
+---
+const categories = [
+  {
+    title: 'Escudos de Bronce',
+    description: 'Ideas para regalar',
+    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=600&auto=format&fit=crop',
+    href: '/catalogo/escudos',
+  },
+  {
+    title: 'Nuevos Productos',
+    description: 'Selección 2025',
+    image: 'https://images.unsplash.com/photo-1566486189376-c4c5c0e8e8b8?q=80&w=600&auto=format&fit=crop',
+    href: '/catalogo/nuevos',
+  },
+  {
+    title: 'Ofertas 2026',
+    description: 'Productos personalizados',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=600&auto=format&fit=crop',
+    href: '/ofertas',
+  },
+  {
+    title: 'Redes Sociales',
+    description: 'Descuentos exclusivos',
+    image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=600&auto=format&fit=crop',
+    href: 'https://instagram.com/productosnauticos',
+  },
+];
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="section-title mb-3">IDEAS PARA REGALAR</h2>
+      <p class="text-navy-600 max-w-2xl mx-auto">
+        Descubre nuestra selección de productos náuticos exclusivos, perfectos para regalos corporativos y decoración.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {categories.map((cat) => (
+        <a href={cat.href} class="card group">
+          <div class="relative h-48 overflow-hidden">
+            <img 
+              src={cat.image} 
+              alt={cat.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <h3 class="font-display font-bold text-lg">{cat.title}</h3>
+              <p class="text-sm text-white/80">{cat.description}</p>
+            </div>
+          </div>
+          <div class="p-4 flex justify-between items-center">
+            <span class="text-sm font-medium text-navy-700">Ver más</span>
+            <svg class="w-5 h-5 text-navy-400 group-hover:text-navy-900 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
