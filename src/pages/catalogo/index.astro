@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import { categories } from '../../data/categories';
+---
+
+<Layout title="Catálogo | Productos Náuticos" description="Catálogo completo de regalos náuticos, escudos, monedas, decoración marítima y más. Productos personalizados hechos en Chile.">
+  <Header />
+  <main>
+    <!-- Hero catálogo -->
+    <section class="relative h-56 md:h-72 flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0">
+        <img
+          src="/header.png"
+          alt="Catálogo"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-navy-950/55"></div>
+      </div>
+      <h1 class="relative z-10 text-4xl md:text-6xl font-display font-extrabold text-white tracking-wide drop-shadow-lg">
+        CATÁLOGO
+      </h1>
+    </section>
+
+    <!-- Categorías -->
+    <section class="bg-gray-100 -mt-6 relative z-10 pb-20">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="bg-white rounded-t-3xl shadow-lg px-4 sm:px-8 pt-10 pb-16">
+          <h2 class="text-center text-2xl md:text-3xl font-display font-bold text-navy-900 mb-10 underline decoration-navy-900 decoration-2 underline-offset-8">
+            CATEGORÍAS
+          </h2>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
+            {categories.map((cat) => (
+              <a
+                href={`/catalogo/${cat.slug}`}
+                class="group flex flex-col items-center text-center"
+              >
+                <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white shadow-md border border-navy-100 overflow-hidden flex items-center justify-center mb-3 group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    class="w-full h-full object-contain p-2"
+                    loading="lazy"
+                  />
+                </div>
+                <span class="text-xs md:text-sm font-medium text-navy-800 group-hover:text-navy-950 leading-snug max-w-[9rem]">
+                  {cat.name}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <WhatsAppButton />
+</Layout>

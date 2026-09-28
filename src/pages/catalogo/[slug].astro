@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import { categories } from '../../data/categories';
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+---
+
+<Layout title={`${category.name} | Catálogo Productos Náuticos`} description={`Productos de la categoría ${category.name}. Regalos náuticos personalizados.`}>
+  <Header />
+  <main>
+    <section class="relative h-40 md:h-52 flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0">
+        <img src="/header.png" alt="" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-navy-950/60"></div>
+      </div>
+      <div class="relative z-10 text-center px-4">
+        <a href="/catalogo" class="text-white/70 text-sm hover:text-white transition">← Catálogo</a>
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-white mt-2">{category.name}</h1>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <div class="bg-white rounded-2xl shadow-md p-8 md:p-12 text-center">
+        <img src={category.image} alt={category.name} class="w-32 h-32 object-contain mx-auto mb-6" />
+        <h2 class="text-xl font-display font-bold text-navy-900 mb-3">{category.name}</h2>
+        <p class="text-navy-600 max-w-lg mx-auto mb-8">
+          Estamos cargando los productos de esta categoría. Contáctanos por WhatsApp para cotizar o ver disponibilidad.
+        </p>
+        <a
+          href={`https://wa.me/56986381820?text=${encodeURIComponent(`Hola! Me interesa la categoría: ${category.name}`)}`}
+          target="_blank"
+          rel="noopener"
+          class="btn-primary"
+        >
+          Consultar por WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <WhatsAppButton />
+</Layout>
