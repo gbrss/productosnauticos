@@ -11,11 +11,11 @@ export const categories: Category[] = [
     slug: 'anclas',
     image: 'https://i0.wp.com/nautigift.cl/wp-content/uploads/2020/04/A-101.jpg?fit=300%2C300&ssl=1',
   },
-  {
+  /**{
     name: 'Antigüedades',
     slug: 'antiguedades',
     image: 'https://i0.wp.com/nautigift.cl/wp-content/uploads/2020/07/AN-100.png?fit=300%2C300&ssl=1',
-  },
+  }**/
   {
     name: 'Artículos de Bar y Asado',
     slug: 'articulos-de-bar-y-asado',
