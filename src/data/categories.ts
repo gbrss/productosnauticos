@@ -109,7 +109,7 @@ export const categories: Category[] = [
   {
     name: 'Infantería de Marina',
     slug: 'infanteria-de-marina',
-    image: 'https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/IMG_20201031_131550.jpg?fit=300%2C300&ssl=1',
+    image: 'https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/04/Infanteria-de-Marina-Redondo_Redondo.png?fit=300%2C300&ssl=1',
   },
   {
     name: 'Jarros y Shoperos',
