@@ -51,29 +51,22 @@ const products = getProducts(category.slug);
           ) : (
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {products.map((p) => (
-                <article class="group flex flex-col items-center text-center">
+                <a href={`/producto/${p.slug}`} class="group flex flex-col items-center text-center">
                   <div class="w-full aspect-square bg-gray-50 rounded-xl overflow-hidden mb-3 flex items-center justify-center border border-navy-50 group-hover:shadow-md transition">
                     {p.image ? (
-                      <img src={p.image} alt={p.name} class="w-full h-full object-contain p-2" loading="lazy" />
+                      <img src={p.image} alt={p.name} class="w-full h-full object-contain p-2 group-hover:scale-105 transition" loading="lazy" />
                     ) : (
                       <span class="text-4xl text-navy-200">⚓</span>
                     )}
                   </div>
                   {p.sku && <p class="text-xs font-semibold text-navy-900 tracking-wide">{p.sku}</p>}
-                  <h3 class="text-xs md:text-sm text-navy-700 leading-snug mt-1 mb-1 min-h-[2.5rem]">{p.name}</h3>
+                  <h3 class="text-xs md:text-sm text-navy-700 leading-snug mt-1 mb-1 min-h-[2.5rem] group-hover:text-navy-950">{p.name}</h3>
                   {p.description && (
                     <p class="text-[10px] md:text-xs text-navy-500 leading-snug mb-2 line-clamp-2">{p.description}</p>
                   )}
                   {p.price && <p class="text-sm font-bold text-navy-900">{p.price}</p>}
-                  <a
-                    href={`https://wa.me/56986381820?text=${encodeURIComponent(`Hola! Me interesa: ${p.sku ? p.sku + ' - ' : ''}${p.name}${p.price ? ' (' + p.price + ')' : ''}`)}`}
-                    target="_blank"
-                    rel="noopener"
-                    class="mt-2 text-xs text-green-700 hover:text-green-800 font-medium"
-                  >
-                    Consultar →
-                  </a>
-                </article>
+                  <span class="mt-2 text-xs text-navy-600 group-hover:text-navy-900 font-medium">Ver ficha →</span>
+                </a>
               ))}
             </div>
           )}

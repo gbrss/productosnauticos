@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import { categories } from '../../data/categories';
+import { getAllProducts, getProducts } from '../../data/products';
+
+export function getStaticPaths() {
+  return getAllProducts().map((p) => ({
+    params: { slug: p.slug },
+    props: { product: p },
+  }));
+}
+
+const { product } = Astro.props;
+const category = categories.find((c) => c.slug === product.category);
+const related = getProducts(product.category)
+  .filter((p) => p.slug !== product.slug)
+  .slice(0, 4);
+
+const waText = encodeURIComponent(
+  `Hola! Me interesa: ${product.sku ? product.sku + ' - ' : ''}${product.name}${product.price ? ' (' + product.price + ')' : ''}`
+);
+const largeImage = product.image
+  ? product.image.replace('fit=400%2C400', 'fit=1200%2C1200').replace('resize=300%2C300', 'fit=1200%2C1200')
+  : null;
+---
+
+<Layout
+  title={`${product.name}${product.sku ? ' | ' + product.sku : ''} | Productos Náuticos`}
+  description={product.description || product.name}
+>
+  <Header />
+  <main class="bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-navy-500 mb-6 flex flex-wrap items-center gap-1">
+        <a href="/" class="hover:text-navy-900">Inicio</a>
+        <span>/</span>
+        <a href="/catalogo" class="hover:text-navy-900">Catálogo</a>
+        {category && (
+          <>
+            <span>/</span>
+            <a href={`/catalogo/${category.slug}`} class="hover:text-navy-900">{category.name}</a>
+          </>
+        )}
+        <span>/</span>
+        <span class="text-navy-800 font-medium truncate max-w-[12rem] sm:max-w-none">{product.name}</span>
+      </nav>
+
+      <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="grid md:grid-cols-2 gap-0">
+          <!-- Image with zoom -->
+          <div class="p-6 md:p-10 bg-gray-50 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-navy-50">
+            {product.image ? (
+              <button
+                type="button"
+                id="open-lightbox"
+                class="relative group w-full max-w-md aspect-square bg-white rounded-xl border border-navy-100 overflow-hidden cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-navy-400"
+                aria-label="Ampliar imagen"
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  class="w-full h-full object-contain p-4 transition group-hover:scale-105"
+                  id="product-main-img"
+                />
+                <span class="absolute bottom-3 right-3 bg-navy-900/80 text-white text-xs px-2.5 py-1.5 rounded-full flex items-center gap-1 opacity-90 group-hover:opacity-100">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                  </svg>
+                  Ampliar
+                </span>
+              </button>
+            ) : (
+              <div class="w-full max-w-md aspect-square flex items-center justify-center text-6xl text-navy-200">⚓</div>
+            )}
+          </div>
+
+          <!-- Details -->
+          <div class="p-6 md:p-10 flex flex-col">
+            {product.sku && (
+              <p class="text-xs font-semibold tracking-wider text-navy-500 mb-1">SKU {product.sku}</p>
+            )}
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-navy-900 leading-tight mb-3">
+              {product.name}
+            </h1>
+
+            {category && (
+              <a href={`/catalogo/${category.slug}`} class="text-sm text-navy-600 hover:text-navy-900 mb-4 inline-block">
+                Categoría: <span class="underline">{category.name}</span>
+              </a>
+            )}
+
+            {product.price && (
+              <p class="text-3xl font-bold text-navy-900 mb-6">{product.price}</p>
+            )}
+
+            {(product.full_description || product.short_description || product.description) && (
+              <div class="mb-6">
+                <h2 class="text-sm font-semibold text-navy-800 mb-2">Descripción</h2>
+                <p class="text-navy-600 text-sm leading-relaxed">
+                  {product.full_description || product.short_description || product.description}
+                </p>
+              </div>
+            )}
+
+            {(product.weight || product.dimensions) && (
+              <div class="mb-8 border border-navy-100 rounded-xl overflow-hidden">
+                <h2 class="text-sm font-semibold text-navy-800 px-4 py-2.5 bg-navy-50 border-b border-navy-100">
+                  Información adicional
+                </h2>
+                <dl class="text-sm">
+                  {product.weight && (
+                    <div class="flex justify-between px-4 py-2.5 border-b border-navy-50">
+                      <dt class="text-navy-500">Peso</dt>
+                      <dd class="font-medium text-navy-900">{String(product.weight).replace('.', ',')} kg</dd>
+                    </div>
+                  )}
+                  {product.dimensions && (
+                    <div class="flex justify-between px-4 py-2.5">
+                      <dt class="text-navy-500">Dimensiones</dt>
+                      <dd class="font-medium text-navy-900">{product.dimensions}</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            )}
+
+            <div class="mt-auto flex flex-col sm:flex-row gap-3">
+              <a
+                href={`https://wa.me/56986381820?text=${waText}`}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#1ebe57] text-white font-semibold px-6 py-3.5 rounded-full transition"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M16.001 2.002c-7.713 0-13.975 6.262-13.975 13.975 0 2.465.643 4.868 1.865 6.99L2 30l7.2-1.886a13.92 13.92 0 006.801 1.735h.006c7.713 0 13.975-6.262 13.975-13.975S23.714 2.002 16.001 2.002z"/>
+                </svg>
+                Consultar por WhatsApp
+              </a>
+              <a
+                href={category ? `/catalogo/${category.slug}` : '/catalogo'}
+                class="inline-flex items-center justify-center px-6 py-3.5 rounded-full border border-navy-200 text-navy-800 font-medium hover:bg-navy-50 transition"
+              >
+                ← Volver al catálogo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related -->
+      {related.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-xl font-display font-bold text-navy-900 mb-6">Más de esta categoría</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {related.map((p) => (
+              <a href={`/producto/${p.slug}`} class="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition text-center group">
+                <div class="aspect-square bg-gray-50 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} class="w-full h-full object-contain p-2 group-hover:scale-105 transition" loading="lazy" />
+                  ) : (
+                    <span class="text-3xl text-navy-200">⚓</span>
+                  )}
+                </div>
+                {p.sku && <p class="text-[10px] font-semibold text-navy-500">{p.sku}</p>}
+                <p class="text-xs text-navy-800 leading-snug mt-1 line-clamp-2">{p.name}</p>
+                {p.price && <p class="text-sm font-bold text-navy-900 mt-1">{p.price}</p>}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </main>
+  <Footer />
+  <WhatsAppButton />
+
+  <!-- Lightbox -->
+  {product.image && (
+    <div
+      id="lightbox"
+      class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/90 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Imagen ampliada"
+    >
+      <button
+        type="button"
+        id="close-lightbox"
+        class="absolute top-4 right-4 text-white/90 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+        aria-label="Cerrar"
+      >
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <img
+        src={largeImage || product.image}
+        alt={product.name}
+        class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+        id="lightbox-img"
+      />
+    </div>
+  )}
+</Layout>
+
+<script>
+  const openBtn = document.getElementById('open-lightbox');
+  const lightbox = document.getElementById('lightbox');
+  const closeBtn = document.getElementById('close-lightbox');
+
+  function openLb() {
+    if (!lightbox) return;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    if (!lightbox) return;
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  openBtn?.addEventListener('click', openLb);
+  closeBtn?.addEventListener('click', closeLb);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLb();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLb();
+  });
+</script>
