@@ -1,8 +1,8 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import { subcategoriasEscudos, productosPorSubcategoria } from '../../../data/escudos';
-import { productos } from '../../../data/productos'; // tu data actual
+import { subcategoriasEscudos } from '../../../data/escudos.ts';
 
+// Esta función le dice a Astro qué páginas generar
 export function getStaticPaths() {
   return subcategoriasEscudos.map(cat => ({
     params: { subcategoria: cat.slug },
@@ -11,22 +11,30 @@ export function getStaticPaths() {
 }
 
 const { cat } = Astro.props;
-const ids = productosPorSubcategoria[cat.slug];
-const productosFiltrados = productos.filter(p => ids.includes(p.sku));
+// Asume que cada subcategoria tiene su lista de productos dentro del mismo archivo
+// Si en tu escudos.ts tienes productosPorSubcategoria o cat.productos
+const productos = cat.productos || [];
 ---
 <Layout title={`${cat.nombre} | Escudos`}>
   <section class="container mx-auto px-6 py-12">
-    <nav class="text-sm mb-4"><a href="/catalogo/escudos/">Escudos</a> / {cat.nombre}</nav>
+    <nav class="text-sm mb-4 text-gray-500">
+      <a href="/catalogo/escudos/" class="underline">Escudos</a> / {cat.nombre}
+    </nav>
     <h1 class="text-3xl font-bold mb-8">{cat.nombre}</h1>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {productosFiltrados.map(p => (
-        <a href={`/catalogo/escudos/${p.slug}/`} class="border p-4 rounded">
-          <img src={p.imagen} />
-          <h3>{p.sku} {p.nombre}</h3>
-          <p>${p.precio}</p>
-        </a>
-      ))}
-    </div>
+    {productos.length === 0 ? (
+      <p>No hay productos cargados en escudos.ts para {cat.slug}</p>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {productos.map(p => (
+          <div class="border p-4 rounded-lg">
+            <img src={p.imagen} alt={p.nombre} class="w-full h-48 object-contain mb-3" />
+            <h3 class="font-semibold">{p.sku} {p.nombre}</h3>
+            <p class="text-sm text-gray-600">{p.peso ? `Peso: ${p.peso}` : ''}</p>
+            <p class="font-bold mt-2">${p.precio}</p>
+          </div>
+        ))}
+      </div>
+    )}
   </section>
 </Layout>
