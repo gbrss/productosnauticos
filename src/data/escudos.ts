@@ -2912,7 +2912,7 @@ export const subcategoriasEscudos = [
     descripcion: "Galvano Escudo Nacional de Bronce, Resina y Aluminio. Pintado colores reglamentarios.",
     imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/B-462-A.jpg?fit=300%2C300&ssl=1",
     medida: "23x18 cm / 33x27x4 cm",
-    count: 4,
+    count: 2,
     productos: [
       { sku: "B-462", nombre: "GALVANO ESCUDO NACIONAL DE BRONCE", precio: "37.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/05/B-462-2.jpg?w=1088&ssl=1" },
       { sku: "B-462-A", nombre: "GALVANO ESCUDO NACIONAL DE RESINA", precio: "66.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/B-462-A-2.jpg?w=1088&ssl=1" },
