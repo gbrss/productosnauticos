@@ -34,7 +34,7 @@ export const subcategoriasEscudos: SubcategoriaEscudo[] = [
     slug: "escudos-portalon",
     nombre: "Escudos de Portalón",
     descripcion: "Compañía de Reserva Naval Yates",
-    imagen: "/images/escudos/mini.jpg",
+    imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/Armada-40cm.jpg?fit=300%2C300&ssl=1",
     count: 4
   }
 ];
