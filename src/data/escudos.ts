@@ -2881,6 +2881,30 @@ const matrizBronce = [
   }
 ];
 
+// Matriz MEDIANOS 14.5x9.5 cm (20 filas) - para /escudos-de-bronce-m (CON PRECIO)
+export const matrizBronceM = [
+  { sku: "E-601", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "ARMADA DE CHILE", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-602", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "COMANDANCIA EN JEFE", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN / 3 MATRICES" },
+  { sku: "E-603", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "CUARTA ZONA NAVAL", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-604", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "CONTRALORÍA", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-605", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "DIRECCIÓN DE INTELIGENCIA", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-606", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "DIRECCIÓN DE SEGURIDAD Y OPERACIONES MARÍTIMAS", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-607", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "DIRECCIÓN GENERAL DEL TERRITORIO MARÍTIMO Y DE MARINA MERCANTE", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-608", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "DIRECCIÓN DE INTERESES MARÍTIMOS Y MEDIO AMBIENTE ACUATICO", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-609", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "CENTRO DE ABASTECIMIENTO (V.)", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-610", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "DEPARTAMENTO BIENESTAR SOCIAL PRIMERA ZONA NAVAL", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-611", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "ESCUELA DE ARTESANOS NAVALES", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-612", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "COMANDO DE OPERACIONES NAVALES", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-613", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "BRIGADA ANFIBIA EXPEDICIONARIA", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-614", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "CENTRAL ODONTOLÓGICA SEGUNDA ZONA NAVAL", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-615", institucion: "ARMADA DE CHILE", reparticion: "ESCUADRA", unidad: "THOMSON", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-616", institucion: "ARMADA DE CHILE", reparticion: "ESCUADRA", unidad: "ALMIRANTE CONDELL", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-617", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "ASG 61 CABO DE HORNOS", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-618", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "L.S.G. CONCEPCIÓN", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-619", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "MARINERO FUENTEALBA", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" },
+  { sku: "E-620", institucion: "ARMADA DE CHILE", reparticion: "", unidad: "COMPAÑÍA DE OFICIALES DE RESERVA NAVAL", medidas: "14.5 X 9.5", fecha: "-", calzo: "ESCUDOS MEDIANOS", obs: "SIN BLASÓN" }
+];
+
 export const subcategoriasEscudos = [
   {
     slug: "escudos-nacionales",
@@ -2919,7 +2943,7 @@ export const subcategoriasEscudos = [
       { sku: "E-201-B", nombre: "Escudos de Bronce Medianos", precio: "67.900", descripcion: "Escudos de bronce fundido medianos, Tamaño aprox. de 14.5 x 9.5 cm. en base de madera.", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/E-112-F-rotated.jpg?fit=300%2C300&ssl=1" },
       { sku: "E-201-B-BLASON", nombre: "Escudo de Bronce Mediano con blasón", precio: "73.900", descripcion: "Escudos de bronce fundido medianos con blasón, Tamaño aprox. de 14.5 x 9.5 cm. en base de madera.", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/E-112-F-rotated.jpg?fit=300%2C300&ssl=1" }
     ],
-    matriz: matrizBronce
+    matriz: matrizBronceM
   },
   {
     slug: "escudos-de-portalon",
@@ -2928,11 +2952,6 @@ export const subcategoriasEscudos = [
     imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/Armada-40cm.jpg?fit=300%2C300&ssl=1",
     medida: "32 x 19 x 3 cm",
     count: 3,
-    productos: [
-      { sku: "E-200-A", nombre: "ESCUDO DE RESINA PINTADA BRONCE METALICO", precio: "49.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/Armada-40cm.jpg?fit=300%2C300&ssl=1" },
-      { sku: "E-200-B", nombre: "ESCUDO DE RESINA PINTADO COLORES REGLAMENTARIOS", precio: "69.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/Armada-40cm.jpg?fit=300%2C300&ssl=1" },
-      { sku: "E-200-B1", nombre: "ESCUDO DE RESINA PINTADO COLORES REGLAMENTARIOS, CON BLASÓN", precio: "75.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/Armada-40cm.jpg?fit=300%2C300&ssl=1" }
-    ],
-    matriz: matrizBronce
+    productos: []
   }
 ];
