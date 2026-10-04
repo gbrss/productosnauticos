@@ -1,5 +1,8 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import WhatsAppButton from '../../../components/WhatsAppButton.astro';
 import { subcategoriasEscudos } from '../../../data/escudos';
 
 export function getStaticPaths() {
@@ -10,27 +13,142 @@ export function getStaticPaths() {
 }
 const { cat } = Astro.props;
 ---
-<Layout title={`${cat.nombre} | Productos Náuticos`}>
-  <section class="relative bg-cover bg-center py-16" style="background-image: url('/images/fondo-catalogo.jpg')">
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div class="relative container mx-auto px-6 text-center text-white">
-      <a href="/catalogo/escudos/" class="text-sm opacity-80">← Escudos</a>
-      <h1 class="text-4xl font-bold mt-2">{cat.nombre}</h1>
-      <p class="mt-2 opacity-90">{cat.productos.length} productos</p>
-    </div>
-  </section>
 
-  <section class="container mx-auto px-6 py-10">
-    <div class="grid grid-cols-2 gap-6">
-      {cat.productos.map((p: any) => (
-        <div class="border rounded-xl p-4 text-center">
-          <img src={p.imagen} class="w-full h-48 object-contain mb-3" />
-          <h3 class="font-bold text-sm">{p.sku}</h3>
-          <p class="text-xs">{p.nombre}</p>
-          <p class="font-bold mt-2">${p.precio}</p>
-          <a href="#" class="text-sm text-blue-900">Ver ficha →</a>
+<Layout title={`${cat.nombre} | Productos Náuticos`} description={cat.descripcion}>
+  <Header />
+  <main>
+    <section class="relative h-56 md:h-72 flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0">
+        <img src="/header.png" alt={cat.nombre} class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-navy-950/55"></div>
+      </div>
+      <div class="relative z-10 flex flex-col items-center text-center px-4">
+        <a href="/catalogo/escudos/" class="text-white/80 text-sm hover:underline mb-2">← Escudos</a>
+        <h1 class="text-3xl md:text-5xl font-display font-extrabold text-white tracking-wide drop-shadow-lg">
+          {cat.nombre}
+        </h1>
+        <p class="text-white/70 text-xs mt-2">{cat.medida} • {cat.count} productos</p>
+      </div>
+    </section>
+
+    <section class="bg-gray-100 -mt-6 relative z-10 pb-20">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="bg-white rounded-t-3xl shadow-lg px-4 sm:px-8 pt-10 pb-16">
+          <p class="text-sm text-gray-600 mb-6">{cat.descripcion}</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {cat.productos.map((p:any) => (
+              <div class="flex flex-col items-center text-center p-4">
+                <img src={p.imagen} alt={p.nombre} class="w-28 h-36 object-contain mb-4" />
+                <h3 class="font-bold text-navy-900 text-sm">{p.nombre}</h3>
+                {p.precio && <p class="font-extrabold text-navy-900 mt-1">${p.precio}</p>}
+                <p class="text-[11px] text-gray-600 mt-2 leading-snug max-w-[22rem]">
+                  {p.descripcion}<br/>Contáctenos para hacer su pedido.
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <!-- PLANILLA COMPACTA CON PAGINACIÓN -->
+          <div id="matriz-container">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+              <h3 class="font-bold text-navy-900 text-sm">Reparticiones disponibles - Matriz Nautigift (288 unidades)</h3>
+              <div class="flex gap-2">
+                <input id="searchMatriz" type="text" placeholder="Filtrar por unidad o repartición..." class="border rounded-lg px-3 py-1.5 text-xs w-64 focus:outline-none focus:ring-2 focus:ring-navy-900" />
+                <span id="counter" class="text- text-gray-500 self-center"></span>
+              </div>
+            </div>
+
+            <div class="overflow-auto border rounded-xl">
+              <table class="w-full text- border-collapse">
+                <thead class="bg-gray-50 sticky top-0">
+                  <tr class="text- uppercase tracking-wider text-gray-600">
+                    <th class="border-b p-2 text-left w-[30%]">Repartición</th>
+                    <th class="border-b p-2 text-left w-[35%]">Unidad</th>
+                    <th class="border-b p-2 text-center w-[15%]">Medida</th>
+                    <th class="border-b p-2 text-center w-[10%]">Calzo</th>
+                    <th class="border-b p-2 text-left w-[10%]">Obs</th>
+                  </tr>
+                </thead>
+                <tbody id="matriz-body">
+                  <!-- se llena por JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="flex items-center justify-between mt-4">
+              <button id="prevBtn" class="px-3 py-1.5 text-xs border rounded-lg hover:bg-gray-50 disabled:opacity-30">← Anterior</button>
+              <div class="flex gap-1" id="pagination"></div>
+              <button id="nextBtn" class="px-3 py-1.5 text-xs border rounded-lg hover:bg-gray-50 disabled:opacity-30">Siguiente →</button>
+            </div>
+          </div>
         </div>
-      ))}
-    </div>
-  </section>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <WhatsAppButton />
+
+  <script define:vars={{ matriz: cat.matriz }}>
+    let filtered = [...matriz];
+    let currentPage = 1;
+    const perPage = 15;
+
+    const body = document.getElementById('matriz-body');
+    const pagination = document.getElementById('pagination');
+    const search = document.getElementById('searchMatriz');
+    const counter = document.getElementById('counter');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function render() {
+      const start = (currentPage - 1) * perPage;
+      const pageData = filtered.slice(start, start + perPage);
+
+      body.innerHTML = pageData.map(r => `
+        <tr class="border-t hover:bg-navy-50/50 text-">
+          <td class="p-2 font-medium text-navy-800">${r.reparticion}</td>
+          <td class="p-2">${r.unidad}</td>
+          <td class="p-2 text-center">${r.medidas || '-'}</td>
+          <td class="p-2 text-center font-mono">${r.calzo || ''}</td>
+          <td class="p-2 text- text-gray-500">${r.obs || ''}</td>
+        </tr>
+      `).join('');
+
+      const totalPages = Math.ceil(filtered.length / perPage) || 1;
+      counter.textContent = `${filtered.length} resultados - Pág ${currentPage}/${totalPages}`;
+
+      // paginación numerada
+      pagination.innerHTML = '';
+      const maxButtons = 5;
+      let startPage = Math.max(1, currentPage - 2);
+      let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+      for (let i = startPage; i <= endPage; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = `px-2 py-1 text-xs rounded ${i === currentPage? 'bg-navy-900 text-white' : 'border hover:bg-gray-50'}`;
+        btn.onclick = () => { currentPage = i; render(); };
+        pagination.appendChild(btn);
+      }
+
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+
+    search.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      filtered = matriz.filter(r =>
+        r.reparticion.toLowerCase().includes(q) ||
+        r.unidad.toLowerCase().includes(q) ||
+        (r.obs && r.obs.toLowerCase().includes(q))
+      );
+      currentPage = 1;
+      render();
+    });
+
+    prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; render(); } };
+    nextBtn.onclick = () => { if (currentPage < Math.ceil(filtered.length / perPage)) { currentPage++; render(); } };
+
+    render();
+  </script>
 </Layout>
