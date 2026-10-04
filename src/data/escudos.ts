@@ -19,7 +19,7 @@ export const subcategoriasEscudos: SubcategoriaEscudo[] = [
     slug: "escudos-de-bronce",
     nombre: "Escudos de Bronce",
     descripcion: "Bronce fundido, base madera y caja",
-    imagen: "/images/escudos/bronce.jpg",
+    imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/E-112-J-2-rotated.jpg?fit=300%2C300&ssl=1",
     count: 2
   },
   {
