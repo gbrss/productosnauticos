@@ -1,0 +1,26 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { subcategoriasEscudos } from '../../../data/escudos';
+---
+<Layout title="Escudos | Catálogo Productos Náuticos">
+  <section class="container mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold mb-2">Escudos</h1>
+    <p class="text-gray-600 mb-8">Estimados clientes: Para pedidos de escudos enviar email a contacto@comercialayd.cl</p>
+    
+    <!-- Grid idéntico a nautigift -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {subcategoriasEscudos.map((cat) => (
+        <a href={`/catalogo/escudos/${cat.slug}/`} class="group border rounded-lg overflow-hidden hover:shadow-xl transition">
+          <div class="aspect-[4/3] bg-gray-100 overflow-hidden">
+            <img src={cat.imagen} alt={cat.nombre} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          </div>
+          <div class="p-4">
+            <h2 class="font-semibold text-lg">{cat.nombre}</h2>
+            <p class="text-sm text-gray-500">{cat.descripcion}</p>
+            <span class="text-xs text-gray-400">{cat.count} productos</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
