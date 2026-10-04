@@ -1,40 +1,36 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import { subcategoriasEscudos } from '../../../data/escudos.ts';
+import { subcategoriasEscudos } from '../../../data/escudos';
 
-// Esta función le dice a Astro qué páginas generar
 export function getStaticPaths() {
   return subcategoriasEscudos.map(cat => ({
     params: { subcategoria: cat.slug },
     props: { cat }
   }));
 }
-
 const { cat } = Astro.props;
-// Asume que cada subcategoria tiene su lista de productos dentro del mismo archivo
-// Si en tu escudos.ts tienes productosPorSubcategoria o cat.productos
-const productos = cat.productos || [];
 ---
-<Layout title={`${cat.nombre} | Escudos`}>
-  <section class="container mx-auto px-6 py-12">
-    <nav class="text-sm mb-4 text-gray-500">
-      <a href="/catalogo/escudos/" class="underline">Escudos</a> / {cat.nombre}
-    </nav>
-    <h1 class="text-3xl font-bold mb-8">{cat.nombre}</h1>
-    
-    {productos.length === 0 ? (
-      <p>No hay productos cargados en escudos.ts para {cat.slug}</p>
-    ) : (
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {productos.map(p => (
-          <div class="border p-4 rounded-lg">
-            <img src={p.imagen} alt={p.nombre} class="w-full h-48 object-contain mb-3" />
-            <h3 class="font-semibold">{p.sku} {p.nombre}</h3>
-            <p class="text-sm text-gray-600">{p.peso ? `Peso: ${p.peso}` : ''}</p>
-            <p class="font-bold mt-2">${p.precio}</p>
-          </div>
-        ))}
-      </div>
-    )}
+<Layout title={`${cat.nombre} | Productos Náuticos`}>
+  <section class="relative bg-cover bg-center py-16" style="background-image: url('/images/fondo-catalogo.jpg')">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative container mx-auto px-6 text-center text-white">
+      <a href="/catalogo/escudos/" class="text-sm opacity-80">← Escudos</a>
+      <h1 class="text-4xl font-bold mt-2">{cat.nombre}</h1>
+      <p class="mt-2 opacity-90">{cat.productos.length} productos</p>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-6 py-10">
+    <div class="grid grid-cols-2 gap-6">
+      {cat.productos.map((p: any) => (
+        <div class="border rounded-xl p-4 text-center">
+          <img src={p.imagen} class="w-full h-48 object-contain mb-3" />
+          <h3 class="font-bold text-sm">{p.sku}</h3>
+          <p class="text-xs">{p.nombre}</p>
+          <p class="font-bold mt-2">${p.precio}</p>
+          <a href="#" class="text-sm text-blue-900">Ver ficha →</a>
+        </div>
+      ))}
+    </div>
   </section>
 </Layout>
