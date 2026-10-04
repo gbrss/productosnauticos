@@ -1,0 +1,32 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { subcategoriasEscudos, productosPorSubcategoria } from '../../../data/escudos';
+import { productos } from '../../../data/productos'; // tu data actual
+
+export function getStaticPaths() {
+  return subcategoriasEscudos.map(cat => ({
+    params: { subcategoria: cat.slug },
+    props: { cat }
+  }));
+}
+
+const { cat } = Astro.props;
+const ids = productosPorSubcategoria[cat.slug];
+const productosFiltrados = productos.filter(p => ids.includes(p.sku));
+---
+<Layout title={`${cat.nombre} | Escudos`}>
+  <section class="container mx-auto px-6 py-12">
+    <nav class="text-sm mb-4"><a href="/catalogo/escudos/">Escudos</a> / {cat.nombre}</nav>
+    <h1 class="text-3xl font-bold mb-8">{cat.nombre}</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {productosFiltrados.map(p => (
+        <a href={`/catalogo/escudos/${p.slug}/`} class="border p-4 rounded">
+          <img src={p.imagen} />
+          <h3>{p.sku} {p.nombre}</h3>
+          <p>${p.precio}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
