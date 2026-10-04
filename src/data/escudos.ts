@@ -8,10 +8,10 @@ export interface SubcategoriaEscudo {
 
 export const subcategoriasEscudos: SubcategoriaEscudo[] = [
   {
-    slug: "escudos-de-resina",
-    nombre: "Escudos de Resina",
-    descripcion: "Pintados colores reglamentarios, base madera",
-    imagen: "/images/escudos/resina.jpg",
+    slug: "escudos-de-bronce-m",
+    nombre: "Escudos de Bronce M",
+    descripcion: "Bronce fundido, base madera y caja",
+    imagen: "/images/escudos/bronce-m.jpg",
     count: 4
   },
   {
@@ -29,8 +29,8 @@ export const subcategoriasEscudos: SubcategoriaEscudo[] = [
     count: 4
   },
   {
-    slug: "escudos-mini",
-    nombre: "Escudos Mini Reserva Naval",
+    slug: "escudos-portalon",
+    nombre: "Escudos de Portalón",
     descripcion: "Compañía de Reserva Naval Yates",
     imagen: "/images/escudos/mini.jpg",
     count: 1
