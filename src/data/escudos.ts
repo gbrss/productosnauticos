@@ -12,7 +12,7 @@ export const subcategoriasEscudos: SubcategoriaEscudo[] = [
     slug: "escudo-nacional",
     nombre: "Escudo Nacional",
     descripcion: "Galvanos de bronce, resina y aluminio",
-    imagen: "/images/escudos/nacional.jpg",
+    imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/B-462-A.jpg?fit=300%2C300&ssl=1",
     count: 1
   },
   {
