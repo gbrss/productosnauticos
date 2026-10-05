@@ -2951,7 +2951,7 @@ export const subcategoriasEscudos = [
     descripcion: "Escudo de Resina pintado colores reglamentarios o bronce metálico, base madera, 32 x 19 x 3 cm.",
     imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/Armada-40cm.jpg?fit=300%2C300&ssl=1",
     medida: "32 x 19 x 3 cm",
-    count: 3,
+    count: 0,
     productos: []
   }
 ];
