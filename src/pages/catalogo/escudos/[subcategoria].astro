@@ -13,6 +13,10 @@ export function getStaticPaths() {
 }
 const { cat } = Astro.props;
 ---
+<style>
+ .matriz-table { border-collapse: collapse; width: 100%; table-layout: auto; }
+ .matriz-table th,.matriz-table td { border: 1.2px solid #000!important; }
+</style>
 
 <Layout title={`${cat.nombre} | Productos Náuticos`} description={cat.descripcion}>
   <Header />
@@ -24,65 +28,60 @@ const { cat } = Astro.props;
       </div>
       <div class="relative z-10 flex flex-col items-center text-center px-4">
         <a href="/catalogo/escudos/" class="text-white/80 text-sm hover:underline mb-2">← Escudos</a>
-        <h1 class="text-3xl md:text-5xl font-display font-extrabold text-white tracking-wide drop-shadow-lg">
-          {cat.nombre}
-        </h1>
+        <h1 class="text-3xl md:text-5xl font-display font-extrabold text-white tracking-wide drop-shadow-lg">{cat.nombre}</h1>
         <p class="text-white/70 text-xs mt-2">{cat.medida} • {cat.count} productos</p>
       </div>
     </section>
 
     <section class="bg-gray-100 -mt-6 relative z-10 pb-20">
-      <div class="max-w-6xl mx-auto px-4">
-        <div class="bg-white rounded-t-3xl shadow-lg px-4 sm:px-8 pt-10 pb-16">
-          <p class="text-sm text-gray-600 mb-6">{cat.descripcion}</p>
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="bg-white rounded-t-3xl shadow-lg px-2 sm:px-8 pt-10 pb-16">
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
             {cat.productos.map((p:any) => (
-              <div class="flex flex-col items-center text-center p-4">
-                <img src={p.imagen} alt={p.nombre} class="w-28 h-36 object-contain mb-4" />
-                <h3 class="font-bold text-navy-900 text-sm">{p.nombre}</h3>
-                {p.precio && <p class="font-extrabold text-navy-900 mt-1">${p.precio}</p>}
-                <p class="text-[11px] text-gray-600 mt-2 leading-snug max-w-[22rem]">
-                  {p.descripcion}<br/>Contáctenos para hacer su pedido.
-                </p>
+              <div class="flex flex-col items-center text-center p-2">
+                <img src={p.imagen} alt={p.nombre} class="w-24 h-32 object-contain mb-3" />
+                <h3 class="font-bold text-navy-900 text-">{p.nombre}</h3>
+                {p.precio && <p class="font-extrabold text-navy-900 mt-1 text-">${p.precio}</p>}
+                <p class="text- text-gray-600 mt-1 leading-tight max-w-">{p.descripcion}<br/>Contáctenos para hacer su pedido.</p>
               </div>
             ))}
           </div>
 
-          <!-- PLANILLA COMPACTA CON PAGINACIÓN -->
           <div id="matriz-container">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
-              <h3 class="font-bold text-navy-900 text-sm">Reparticiones disponibles - Matriz (288 unidades)</h3>
-              <div class="flex gap-2">
-                <input id="searchMatriz" type="text" placeholder="Filtrar por unidad o repartición..." class="border rounded-lg px-3 py-1.5 text-xs w-64 focus:outline-none focus:ring-2 focus:ring-navy-900" />
-                <span id="counter" class="text- text-gray-500 self-center"></span>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
+              <h3 class="font-bold text-navy-900 text-">Reparticiones disponibles - Matriz ({cat.matriz.length} unidades)</h3>
+              <div class="flex gap-2 items-center">
+                <input id="searchMatriz" type="text" placeholder="Filtrar..." class="border border-black rounded-md px-2 py-1 text- w-56" />
+                <span id="counter" class="text- text-gray-500"></span>
               </div>
             </div>
 
-           <div class="overflow-auto border rounded-xl">
-            <table class="w-full text- border-collapse">
-              <thead class="bg-navy-900 text-white sticky top-0">
-                <tr class="text- uppercase tracking-wider">
-                  <th class="border-b border-navy-800 p-2 text-left">SKU</th>
-                  <th class="border-b border-navy-800 p-2 text-left">Institución</th>
-                  <th class="border-b border-navy-800 p-2 text-left">Repartición</th>
-                  <th class="border-b border-navy-800 p-2 text-left">Unidades</th>
-                  <th class="border-b border-navy-800 p-2 text-center">Medidas</th>
-                  <th class="border-b border-navy-800 p-2 text-center">Fecha de Confección</th>
-                  <th class="border-b border-navy-800 p-2 text-center">Calzo</th>
-                  <th class="border-b border-navy-800 p-2 text-left">Observaciones</th>
-                </tr>
-              </thead>
-              <tbody id="matriz-body"></tbody>
+            <div class="overflow-x-auto border border-black">
+              <table class="matriz-table">
+                <thead>
+                  <tr class="bg-[#0a1931] text-white">
+                    <th class="text- font-semibold py-1.5 px-1 uppercase whitespace-nowrap min-w-">SKU</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">INSTITUCIÓN</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">REPARTICIÓN</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">UNIDADES</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">MEDIDAS</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">FECHA DE CONFECCIÓN</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">CALZO</th>
+                    <th class="text- font-semibold py-1.5 px-1 uppercase min-w-">OBSERVACIONES</th>
+                  </tr>
+                </thead>
+                <tbody id="matriz-body"></tbody>
               </table>
             </div>
 
-            <div class="flex items-center justify-between mt-4">
-              <button id="prevBtn" class="px-3 py-1.5 text-xs border rounded-lg hover:bg-gray-50 disabled:opacity-30">← Anterior</button>
+            <div class="flex items-center justify-between mt-3">
+              <button id="prevBtn" class="px-2 py-1 text- border border-black rounded">← Anterior</button>
               <div class="flex gap-1" id="pagination"></div>
-              <button id="nextBtn" class="px-3 py-1.5 text-xs border rounded-lg hover:bg-gray-50 disabled:opacity-30">Siguiente →</button>
+              <button id="nextBtn" class="px-2 py-1 text- border border-black rounded">Siguiente →</button>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -93,8 +92,7 @@ const { cat } = Astro.props;
   <script define:vars={{ matriz: cat.matriz }}>
     let filtered = [...matriz];
     let currentPage = 1;
-    const perPage = 15;
-
+    const perPage = 25;
     const body = document.getElementById('matriz-body');
     const pagination = document.getElementById('pagination');
     const search = document.getElementById('searchMatriz');
@@ -103,55 +101,41 @@ const { cat } = Astro.props;
     const nextBtn = document.getElementById('nextBtn');
 
     function render() {
-    const start = (currentPage - 1) * perPage;
-    const pageData = filtered.slice(start, start + perPage);
-
-  body.innerHTML = pageData.map(r => `
-    <tr class="border-t hover:bg-navy-50/50 text-">
-      <td class="p-2 font-mono font-bold">${r.sku || ''}</td>
-      <td class="p-2">${r.institucion || 'ARMADA DE CHILE'}</td>
-      <td class="p-2">${r.reparticion || '-'}</td>
-      <td class="p-2">${r.unidad || r.unidades || ''}</td>
-      <td class="p-2 text-center">${r.medidas || r.medida || '-'}</td>
-      <td class="p-2 text-center">${r.fecha || '-'}</td>
-      <td class="p-2 text-center">${r.calzo || ''}</td>
-      <td class="p-2 text-">${r.obs || r.observaciones || ''}</td>
-    </tr>
-  `).join('');
-
-  const totalPages = Math.ceil(filtered.length / perPage) || 1;
-  counter.textContent = `${filtered.length} resultados - Pág ${currentPage}/${totalPages}`;
-
-  pagination.innerHTML = '';
-  let startPage = Math.max(1, currentPage - 2);
-  let endPage = Math.min(totalPages, startPage + 4);
-  for (let i = startPage; i <= endPage; i++) {
-    const btn = document.createElement('button');
-    btn.textContent = i;
-    btn.className = `px-2 py-1 text-xs rounded ${i === currentPage? 'bg-navy-900 text-white' : 'border hover:bg-gray-50'}`;
-    btn.onclick = () => { currentPage = i; render(); };
-    pagination.appendChild(btn);
-  }
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
-}
-
-    search.addEventListener('input', (e) => {
-  const q = e.target.value.toLowerCase();
-  filtered = matriz.filter(r =>
-    (r.sku||'').toLowerCase().includes(q) ||
-    (r.institucion||'').toLowerCase().includes(q) ||
-    (r.reparticion||'').toLowerCase().includes(q) ||
-    (r.unidad||r.unidades||'').toLowerCase().includes(q) ||
-    (r.obs||r.observaciones||'').toLowerCase().includes(q)
-  );
-  currentPage = 1;
-  render();
-});
-
-    prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; render(); } };
-    nextBtn.onclick = () => { if (currentPage < Math.ceil(filtered.length / perPage)) { currentPage++; render(); } };
-
+      const start = (currentPage - 1) * perPage;
+      const pageData = filtered.slice(start, start + perPage);
+      body.innerHTML = pageData.map(r => `
+        <tr>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; white-space:nowrap; text-transform:uppercase; line-height:1.1;">${r.sku||''}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; text-transform:uppercase; line-height:1.1;">${r.institucion||''}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; text-transform:uppercase; line-height:1.1;">${r.reparticion||''}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:left; text-transform:uppercase; line-height:1.1;">${r.unidad||r.unidades||''}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; line-height:1.1;">${r.medidas||'-'}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; line-height:1.1;">${r.fecha||'-'}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; line-height:1.1;">${r.calzo||''}</td>
+          <td style="border:1.2px solid #000; font-size:12px; padding:3px 4px; text-align:center; line-height:1.1;">${r.obs||''}</td>
+        </tr>
+      `).join('');
+      const totalPages = Math.ceil(filtered.length / perPage) || 1;
+      counter.textContent = `${filtered.length} resultados - Pág ${currentPage}/${totalPages}`;
+      pagination.innerHTML = '';
+      let s = Math.max(1, currentPage-2), e = Math.min(totalPages, s+4);
+      for(let i=s;i<=e;i++){
+        const b=document.createElement('button');
+        b.textContent=i;
+        b.className=`px-2 py-0.5 text- border border-black ${i===currentPage?'bg-[#0a1931] text-white':'bg-white'}`;
+        b.onclick=()=>{currentPage=i; render();};
+        pagination.appendChild(b);
+      }
+      prevBtn.disabled=currentPage===1;
+      nextBtn.disabled=currentPage===totalPages;
+    }
+    search.addEventListener('input', e=>{
+      const q=e.target.value.toLowerCase();
+      filtered=matriz.filter(r=>(r.sku||'').toLowerCase().includes(q)||(r.institucion||'').toLowerCase().includes(q)||(r.reparticion||'').toLowerCase().includes(q)||(r.unidad||r.unidades||'').toLowerCase().includes(q));
+      currentPage=1; render();
+    });
+    prevBtn.onclick=()=>{if(currentPage>1){currentPage--; render();}};
+    nextBtn.onclick=()=>{if(currentPage<Math.ceil(filtered.length/perPage)){currentPage++; render();}};
     render();
   </script>
 </Layout>
