@@ -51,7 +51,7 @@ const products = getProducts(category.slug);
           ) : (
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {products.map((p) => (
-                <a href={`/producto/${p.slug}`} class="group flex flex-col items-center text-center">
+                <a href={`/producto/${p.slug}`} draggable="false" style="-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent" class="group flex flex-col items-center text-center select-none">
                   <div data-zoom class="w-full aspect-square bg-gray-50 rounded-xl overflow-hidden mb-3 flex items-center justify-center border border-navy-50 group-hover:shadow-md transition cursor-zoom-in">
                     {p.image ? (
                       <img src={p.image} alt={p.name} class="w-full h-full object-contain p-2 transition-transform duration-200 ease-out select-none" style="-webkit-touch-callout:none" draggable="false" loading="lazy" />
@@ -81,7 +81,8 @@ const products = getProducts(category.slug);
     // táctiles se activa manteniendo el dedo apretado (así no molesta al hacer
     // scroll ni al tocar para abrir la ficha).
     (function () {
-      var ZOOM = 2.2, HOLD_MS = 300, MOVE_TOL = 8;
+      var ZOOM = 2.2, HOLD_MS = 150, MOVE_TOL = 8;
+      var lastTouch = 0;
       document.querySelectorAll('[data-zoom]').forEach(function (box) {
         var img = box.querySelector('img');
         if (!img) return;
@@ -115,8 +116,13 @@ const products = getProducts(category.slug);
         box.addEventListener('touchstart', function (e) {
           var t = e.touches[0];
           sx = t.clientX; sy = t.clientY; active = false;
+          lastTouch = Date.now();
           clearTimeout(timer);
-          timer = setTimeout(function () { active = true; zoomAt(sx, sy); }, HOLD_MS);
+          timer = setTimeout(function () {
+            active = true;
+            zoomAt(sx, sy);
+            if (navigator.vibrate) navigator.vibrate(8);
+          }, HOLD_MS);
         }, { passive: true });
         box.addEventListener('touchmove', function (e) {
           var t = e.touches[0];
@@ -139,9 +145,13 @@ const products = getProducts(category.slug);
         }
         box.addEventListener('touchend', endTouch);
         box.addEventListener('touchcancel', endTouch);
-        box.addEventListener('contextmenu', function (e) {
-          if (active || suppressClick) e.preventDefault();
-        });
+        // Evita el menú del navegador (copiar/guardar imagen, vista previa del
+        // enlace) al mantener apretado con el dedo; con mouse no se toca.
+        if (link) {
+          link.addEventListener('contextmenu', function (e) {
+            if (active || suppressClick || Date.now() - lastTouch < 2000) e.preventDefault();
+          });
+        }
         if (link) {
           link.addEventListener('click', function (e) {
             if (suppressClick) e.preventDefault();
