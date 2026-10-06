@@ -12,6 +12,7 @@ export function getStaticPaths() {
   }));
 }
 const { cat } = Astro.props;
+const matriz = cat.matriz ?? [];
 ---
 <style>
  .matriz-table { border-collapse: collapse; width: 100%; table-layout: auto; }
@@ -48,9 +49,10 @@ const { cat } = Astro.props;
             ))}
           </div>
 
+          {matriz.length > 0 && (
           <div id="matriz-container">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
-              <h3 class="font-bold text-navy-900 text-">Reparticiones disponibles - Matriz ({cat.matriz.length} unidades)</h3>
+              <h3 class="font-bold text-navy-900 text-">Reparticiones disponibles - Matriz ({matriz.length} unidades)</h3>
               <div class="flex gap-2 items-center">
                 <input id="searchMatriz" type="text" placeholder="Filtrar..." class="border border-black rounded-md px-2 py-1 text- w-56" />
                 <span id="counter" class="text- text-gray-500"></span>
@@ -81,6 +83,7 @@ const { cat } = Astro.props;
               <button id="nextBtn" class="px-2 py-1 text- border border-black rounded">Siguiente →</button>
             </div>
           </div>
+          )}
 
         </div>
       </div>
@@ -89,7 +92,7 @@ const { cat } = Astro.props;
   <Footer />
   <WhatsAppButton />
 
-  <script define:vars={{ matriz: cat.matriz }}>
+  {matriz.length > 0 && (<script define:vars={{ matriz }}>
     let filtered = [...matriz];
     let currentPage = 1;
     const perPage = 25;
@@ -137,5 +140,5 @@ const { cat } = Astro.props;
     prevBtn.onclick=()=>{if(currentPage>1){currentPage--; render();}};
     nextBtn.onclick=()=>{if(currentPage<Math.ceil(filtered.length/perPage)){currentPage++; render();}};
     render();
-  </script>
+  </script>)}
 </Layout>
