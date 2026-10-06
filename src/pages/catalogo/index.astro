@@ -7,13 +7,16 @@ import { categories } from '../../data/categories';
 import { getProducts } from '../../data/products';
 
 // Imagen de cada categoría: la de un producto al azar de esa misma categoría
-// (solo productos con foto real). Se elige al compilar; si la categoría no
-// tiene productos con foto, se usa la imagen definida en categories.ts.
+// (solo productos con foto real). En el HTML queda una imagen elegida al
+// compilar (sirve sin JavaScript) y un grupo de hasta 10 fotos por categoría
+// para que el navegador elija otra al azar en cada visita.
 const hasRealImage = (img: string | null) => !!img && !img.includes('woocommerce-placeholder');
+const shuffle = <T,>(arr: T[]) => [...arr].sort(() => Math.random() - 0.5);
 const cards = categories.map((cat) => {
-  const pool = getProducts(cat.slug).filter((p) => hasRealImage(p.image));
-  const pick = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
-  return { ...cat, image: pick?.image ?? cat.image };
+  const pool = shuffle(
+    Array.from(new Set(getProducts(cat.slug).map((p) => p.image).filter(hasRealImage) as string[]))
+  ).slice(0, 10);
+  return { ...cat, image: pool[0] ?? cat.image, pool };
 });
 ---
 
@@ -52,6 +55,7 @@ const cards = categories.map((cat) => {
                 <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white shadow-md border border-navy-100 overflow-hidden flex items-center justify-center mb-3 group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
                   <img
                     src={cat.image}
+                    data-pool={cat.pool.length > 1 ? JSON.stringify(cat.pool) : undefined}
                     alt={cat.name}
                     class="w-full h-full object-contain p-2"
                     loading="lazy"
@@ -69,4 +73,13 @@ const cards = categories.map((cat) => {
   </main>
   <Footer />
   <WhatsAppButton />
+  <script is:inline>
+    // Cambia la imagen de cada categoría por otra al azar en cada carga de la página.
+    document.querySelectorAll('img[data-pool]').forEach(function (img) {
+      try {
+        var pool = JSON.parse(img.getAttribute('data-pool'));
+        img.src = pool[Math.floor(Math.random() * pool.length)];
+      } catch (e) {}
+    });
+  </script>
 </Layout>
