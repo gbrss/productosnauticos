@@ -4,6 +4,17 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import { categories } from '../../data/categories';
+import { getProducts } from '../../data/products';
+
+// Imagen de cada categoría: la de un producto al azar de esa misma categoría
+// (solo productos con foto real). Se elige al compilar; si la categoría no
+// tiene productos con foto, se usa la imagen definida en categories.ts.
+const hasRealImage = (img: string | null) => !!img && !img.includes('woocommerce-placeholder');
+const cards = categories.map((cat) => {
+  const pool = getProducts(cat.slug).filter((p) => hasRealImage(p.image));
+  const pick = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
+  return { ...cat, image: pick?.image ?? cat.image };
+});
 ---
 
 <Layout title="Catálogo | Productos Náuticos" description="Catálogo completo de regalos náuticos, escudos, monedas, decoración marítima y más. Productos personalizados hechos en Chile.">
@@ -33,7 +44,7 @@ import { categories } from '../../data/categories';
           </h2>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-            {categories.map((cat) => (
+            {cards.map((cat) => (
               <a
                 href={`/catalogo/${cat.slug}`}
                 class="group flex flex-col items-center text-center"
