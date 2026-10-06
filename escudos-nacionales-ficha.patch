@@ -1,0 +1,51 @@
+diff --git a/src/data/escudos.ts b/src/data/escudos.ts
+index 52dd37f..888487d 100644
+--- a/src/data/escudos.ts
++++ b/src/data/escudos.ts
+@@ -2914,8 +2914,8 @@ export const subcategoriasEscudos = [
+     medida: "23x18 cm / 33x27x4 cm",
+     count: 2,
+     productos: [
+-      { sku: "B-462", nombre: "GALVANO ESCUDO NACIONAL DE BRONCE", precio: "37.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/05/B-462-2.jpg?w=1088&ssl=1" },
+-      { sku: "B-462-A", nombre: "GALVANO ESCUDO NACIONAL DE RESINA", precio: "66.500", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/B-462-A-2.jpg?w=1088&ssl=1" },
++      { sku: "B-462", slug: "escudos-b-462", nombre: "GALVANO ESCUDO NACIONAL DE BRONCE", precio: "37.500", descripcion: "Galvano escudo nacional de bronce. Dimensiones: 23 × 18 cm.", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/05/B-462-2.jpg?w=1088&ssl=1" },
++      { sku: "B-462-A", slug: "escudos-b-462-a", nombre: "GALVANO ESCUDO NACIONAL DE RESINA", precio: "66.500", descripcion: "Galvano escudo nacional de resina, pintado en colores reglamentarios. Dimensiones: 33 × 27 × 4 cm.", imagen: "https://i0.wp.com/nautigift.cl/wp-content/uploads/2021/06/B-462-A-2.jpg?w=1088&ssl=1" },
+       ],
+   },
+   {
+diff --git a/src/pages/catalogo/escudos/[subcategoria].astro b/src/pages/catalogo/escudos/[subcategoria].astro
+index af0a822..83c918c 100644
+--- a/src/pages/catalogo/escudos/[subcategoria].astro
++++ b/src/pages/catalogo/escudos/[subcategoria].astro
+@@ -40,12 +40,25 @@ const matriz = cat.matriz ?? [];
+ 
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+             {cat.productos.map((p:any) => (
+-              <div class="flex flex-col items-center text-center p-2">
+-                <img src={p.imagen} alt={p.nombre} class="w-24 h-32 object-contain mb-3" />
+-                <h3 class="font-bold text-navy-900 text-">{p.nombre}</h3>
+-                {p.precio && <p class="font-extrabold text-navy-900 mt-1 text-">${p.precio}</p>}
+-                <p class="text- text-gray-600 mt-1 leading-tight max-w-">{p.descripcion}<br/>Contáctenos para hacer su pedido.</p>
+-              </div>
++              p.slug ? (
++                <a href={`/producto/${p.slug}`} class="group flex flex-col items-center text-center p-2">
++                  <div class="w-full max-w-xs aspect-square bg-gray-50 rounded-xl overflow-hidden mb-3 flex items-center justify-center border border-navy-50 group-hover:shadow-md transition">
++                    <img src={p.imagen} alt={p.nombre} class="w-full h-full object-contain p-2 group-hover:scale-105 transition" loading="lazy" />
++                  </div>
++                  {p.sku && <p class="text-xs font-semibold text-navy-900 tracking-wide">{p.sku}</p>}
++                  <h3 class="font-bold text-navy-900 mt-1 group-hover:text-navy-950">{p.nombre}</h3>
++                  {p.descripcion && <p class="text-sm text-gray-600 mt-1 leading-snug max-w-xs">{p.descripcion}</p>}
++                  {p.precio && <p class="font-extrabold text-navy-900 mt-2">${p.precio}</p>}
++                  <span class="mt-2 text-sm text-navy-600 group-hover:text-navy-900 font-medium">Ver ficha →</span>
++                </a>
++              ) : (
++                <div class="flex flex-col items-center text-center p-2">
++                  <img src={p.imagen} alt={p.nombre} class="w-24 h-32 object-contain mb-3" />
++                  <h3 class="font-bold text-navy-900 text-">{p.nombre}</h3>
++                  {p.precio && <p class="font-extrabold text-navy-900 mt-1 text-">${p.precio}</p>}
++                  <p class="text- text-gray-600 mt-1 leading-tight max-w-">{p.descripcion}<br/>Contáctenos para hacer su pedido.</p>
++                </div>
++              )
+             ))}
+           </div>
+ 
