@@ -71,7 +71,12 @@ const matriz = cat.matriz ?? [];
                 <span id="counter" class="text- text-gray-500"></span>
               </div>
             </div>
-
+            <div class="flex items-center justify-between mt-3">
+              <button id="prevBtn" class="px-2 py-1 text- border border-black rounded">← Anterior</button>
+              <div class="flex gap-1" id="pagination"></div>
+              <button id="nextBtn" class="px-2 py-1 text- border border-black rounded">Siguiente →</button>
+            </div>
+          </div>
             <div class="overflow-x-auto border border-black">
               <table class="matriz-table">
                 <thead>
@@ -89,13 +94,6 @@ const matriz = cat.matriz ?? [];
                 <tbody id="matriz-body"></tbody>
               </table>
             </div>
-
-            <div class="flex items-center justify-between mt-3">
-              <button id="prevBtn" class="px-2 py-1 text- border border-black rounded">← Anterior</button>
-              <div class="flex gap-1" id="pagination"></div>
-              <button id="nextBtn" class="px-2 py-1 text- border border-black rounded">Siguiente →</button>
-            </div>
-          </div>
           )}
 
         </div>
